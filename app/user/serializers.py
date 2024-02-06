@@ -13,8 +13,8 @@ class UserSerializer(serializers.ModelSerializer):
     #sd=StudentSerializer(read_only=True)
     class Meta:
         model = User
-        fields = ('name','email','password','student_account','professor_account')
-        extra_kwargs= {"password":{'write_only':True,'min_length':8}}
+        fields = ('name','email','password','student_account','professor_account','is_default_student')
+        extra_kwargs= {"password":{'write_only':True,'min_length':8},"is_default_student":{'read_only':True}}
         
     
     def create(self, validated_data):
@@ -25,7 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
             level = validated_data.pop('student_account')['level']
             #level = Level.objects.get(id=level_id)
             student = Student.objects.create(level=level)
-            return get_user_model().objects.create_user(student_account=student,**validated_data)
+            return get_user_model().objects.create_user(student_account=student,**validated_data,is_default_student=True)
         elif 'professor_account' in validated_data:
             subjects = validated_data.pop('professor_account')['subjects']
             professor = Professor.objects.create()
