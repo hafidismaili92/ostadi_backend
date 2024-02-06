@@ -33,6 +33,30 @@ class UserSerializer(serializers.ModelSerializer):
             return get_user_model().objects.create_user(professor_account=professor,**validated_data)
         else:
             return None
+
+class CreateTokenSerializer(serializers.Serializer):
+    """login user and create token"""
+    email = serializers.EmailField()
+    password = serializers.CharField(style={'input_style':'password'},trim_whitespace=False)
+
+    def validate(self,attrs):
+        email = attrs['email']
+        password = attrs['password']
+
+        user = authenticate(
+            request= self.context.get('request'),
+            email = email,
+            password = password
+        )
+
+        if not user:
+            msg = _('unable to login with provided credentials')
+            raise serializers.ValidationError(msg,code='Authorization')
+        
+        attrs['user'] = user
+        return attrs
+
+    
         
     
     

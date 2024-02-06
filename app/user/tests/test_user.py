@@ -5,10 +5,11 @@ from django.contrib.auth import get_user_model
 from profils.models import Level, Subject
 from rest_framework.test import APIClient
 from rest_framework import status
-from user.serializers import UserSerializer
+
+
 
 CREATE_USER_URL = reverse('user:create')
-
+GET_TOKEN_URL = reverse('user:token')
 
 class PublicTestUser(TestCase):
     """a class to test user managements (create, login, .....)"""
@@ -98,4 +99,20 @@ class PublicTestUser(TestCase):
         user_exists = get_user_model().objects.filter(email=payload["email"]).exists()
         self.assertFalse(user_exists)
     
+    def test_create_token_success(self):
+        #arrange
+        payloads ={'email':'test@example.com','password':'testpassword'}
+        user = get_user_model().objects.create_user(**payloads)
+
+        #act
+
+        res = self.client.post(GET_TOKEN_URL,payloads)
+
+        #assert
+        self.assertEqual(res.status_code,status.HTTP_200_OK)
+        
+        self.assertIn('token',res.data)
+        
+
+
     
