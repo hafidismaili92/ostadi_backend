@@ -1,4 +1,4 @@
-FROM python:3.9-alpine3.13
+FROM python:3.12-alpine3.19
 LABEL maintainer="Hafidismaili.com"
 
 ENV PYTHONUNBUFFERED 1
@@ -28,4 +28,5 @@ RUN python -m venv /py && \
 
 ENV PATH="/py/bin:$PATH"
 
+RUN chown -R django-user /home
 USER django-user

@@ -1,0 +1,6 @@
+#i use this file to install below requirements in my local machine, to enable python auocomplete (intellisence) in vscode, cause
+#with container i must use dev container which install  vscode container and reinstall all extensions.......
+
+Django>=3.2.4,<3.3
+djangorestframework>=3.12.4,<3.13
+
