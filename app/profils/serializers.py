@@ -7,6 +7,7 @@ class LevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Level
         fields = ('id','title',)
+        
         extra_kwargs= {"title":{'read_only':True},"id":{'read_only':True}}
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -20,6 +21,7 @@ class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
         fields = ('id','title','icon')
+        
         extra_kwargs= {"title":{'read_only':True},"id":{'read_only':True},"icon":{'read_only':True}}
 
 class ProfessorSerializer(serializers.ModelSerializer):
