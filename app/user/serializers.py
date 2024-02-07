@@ -13,8 +13,8 @@ class UserSerializer(serializers.ModelSerializer):
     #sd=StudentSerializer(read_only=True)
     class Meta:
         model = User
-        fields = ('name','email','password','student_account','professor_account','is_default_student')
-        extra_kwargs= {"password":{'write_only':True,'min_length':8},"is_default_student":{'read_only':True}}
+        fields = ('name','email','password','student_account','professor_account','is_default_student','is_student','is_professor')
+        extra_kwargs= {"password":{'write_only':True,'min_length':8},"is_default_student":{'read_only':True},"is_student":{'read_only':True},"is_professor":{'read_only':True}}
         
     
     def create(self, validated_data):
