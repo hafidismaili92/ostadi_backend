@@ -33,6 +33,28 @@ class UserSerializer(serializers.ModelSerializer):
             return get_user_model().objects.create_user(professor_account=professor,**validated_data)
         else:
             return None
+    
+    def to_representation(self, instance):
+        request = self.context.get('request')
+        
+        if request:
+            url_name = request.resolver_match.url_name
+            #if the request is create new user we will return only the created email, 
+            #no need to send all fields listed in serializer
+            if url_name == 'create-user':
+                # Customize fields 
+                fields_to_include = ['email']
+                data = {field: getattr(instance, field) for field in fields_to_include}
+                return data
+            
+        #substitue the null value of is_default_student with false when null
+        representation = super().to_representation(instance)
+        # Check if 'level' field is None and substitute with False
+        if representation['is_default_student'] is None:
+            representation['is_default_student'] = False
+
+        return representation
+
 
 class CreateTokenSerializer(serializers.Serializer):
     """login user and create token"""

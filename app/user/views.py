@@ -10,10 +10,12 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
 class CreateTokenView(ObtainAuthToken):
+    """Create and return a token """
     serializer_class =  CreateTokenSerializer
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
 class MyProfilView(generics.RetrieveAPIView):
+    """Get Profil informations of current authenticated user"""
     serializer_class = UserSerializer
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
