@@ -10,5 +10,6 @@ app_name='user'
 urlpatterns = [
     path('create/',views.CreateUserView.as_view(),name='create-user'),
     path('token-auth/',views.CreateTokenView.as_view(),name='token'),
-    path('me/',views.MyProfilView.as_view(),name='me')
+    path('me/',views.MyProfilView.as_view(),name='me'),
+    path('authenticate-user/',views.AuthenticateMe.as_view(),name='authenticate-user')
 ]

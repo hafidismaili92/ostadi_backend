@@ -6,12 +6,14 @@ from user.models import User
 from profils.models import Level, Professor, Student, Subject
 from rest_framework.test import APIClient
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 
 
 
-CREATE_USER_URL = reverse('user:create')
+CREATE_USER_URL = reverse('user:create-user')
 GET_TOKEN_URL = reverse('user:token')
 GET_MYPROFIl_URL = reverse('user:me')
+AUTHENTICATE_USER_URL = reverse('user:authenticate-user')
 
 class PublicTestUser(TestCase):
     """a class to test user managements (create, login, .....)"""
@@ -152,7 +154,7 @@ class AuthenticatedUserTest(TestCase):
         self.client.force_authenticate(user = self.profUser)
         res = self.client.get(GET_MYPROFIl_URL)
         #assert
-        print(res.data)
+       
         self.assertEqual(res.status_code,status.HTTP_200_OK)
         self.assertEqual(res.data['email'],self.profUser.email)
         self.assertEqual(res.data['name'],self.profUser.name)
@@ -163,6 +165,59 @@ class AuthenticatedUserTest(TestCase):
         res = self.client.post(GET_MYPROFIl_URL,{})
 
         self.assertEqual(res.status_code,status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_authenticate_user_success(self):
+        """test get authenticated user when client request authenticate-user with token provided"""
+
+        #arrange
+        first_subject = Subject.objects.create(title="test subject 1",icon="test icon 1")
+        second_subject = Subject.objects.create(title="test subject 2",icon="test icon 2")
+
+        payloads = {
+            "name":"test name",
+            "email":"test@example.com",
+            "password":"passwordtest",
+            
+        }
+        professor = Professor.objects.create()
+        professor.subjects.set([first_subject.id,second_subject.id])
+        user = get_user_model().objects.create_user(professor_account=professor,**payloads)
+        token = Token.objects.create(user=user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        #act
+        response = self.client.get(AUTHENTICATE_USER_URL)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['email'], payloads['email'])
+
+    def test_authenticate_user_failed(self):
+        """test get authenticated user failed when wrong token provided"""
+
+        #arrange
+        first_subject = Subject.objects.create(title="test subject 1",icon="test icon 1")
+        second_subject = Subject.objects.create(title="test subject 2",icon="test icon 2")
+
+        payloads = {
+            "name":"test name",
+            "email":"test@example.com",
+            "password":"passwordtest",
+            
+        }
+        professor = Professor.objects.create()
+        professor.subjects.set([first_subject.id,second_subject.id])
+        user = get_user_model().objects.create_user(professor_account=professor,**payloads)
+        token = Token.objects.create(user=user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + 'wrong token')
+        #act
+        response = self.client.get(AUTHENTICATE_USER_URL)
+        
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+
+
+
+
 
 
     

@@ -22,4 +22,13 @@ class MyProfilView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+class AuthenticateMe(generics.RetrieveAPIView):
+    """return current authenticated user"""
+    serializer_class = UserSerializer
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
     

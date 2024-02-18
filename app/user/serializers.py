@@ -47,12 +47,18 @@ class UserSerializer(serializers.ModelSerializer):
                 data = {field: getattr(instance, field) for field in fields_to_include}
                 return data
             
+
+            
         #substitue the null value of is_default_student with false when null
         representation = super().to_representation(instance)
         # Check if 'level' field is None and substitute with False
         if representation['is_default_student'] is None:
             representation['is_default_student'] = False
-
+        #if url is authenticate-user then we return only necessary fields (no levels or subjects)
+        if url_name == 'authenticate-user':
+            fields_to_include = ['name','email','is_student','is_professor','is_default_student']
+            data = {field: representation[field] for field in fields_to_include}
+            return data
         return representation
 
 
