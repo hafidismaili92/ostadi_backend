@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/schema',SpectacularAPIView.as_view(),name="api-schema"),
     path('api/docs',SpectacularSwaggerView.as_view(url_name="api-schema"), name="api-docs"),
     path('api/user/',include('user.urls')),
-    path('api/profils/',include('profils.urls'))
+    path('api/profils/',include('profils.urls')),
+    path('api/jobs/',include('jobs.urls'))
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

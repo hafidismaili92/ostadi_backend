@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-v6!v10m@58346$0gje3-@z5shzvm9eboaqg9lt88f-fq$wqslv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','192.168.76.143']
 
 # Application definition
 
@@ -41,9 +41,11 @@ INSTALLED_APPS = [
     'user',
     'core',
     'profils',
+    'jobs',
     'rest_framework',
     'rest_framework.authtoken',
     'drf_spectacular',
+    'django_extensions',
 
 ]
 

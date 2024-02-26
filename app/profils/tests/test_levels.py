@@ -9,12 +9,12 @@ from profils.models import Level
 
 LEVEL_LIST_URL = reverse('profils:levels')
 
-class TestSubjects(TestCase):
+class TestLevels(TestCase):
     """test operation on subjects (retrieve)"""
 
     def setUp(self):
         self.client = APIClient()
-    def test_retrieve_subjects_list_success(self):
+    def test_retrieve_levels_list_success(self):
         #arrange
         payloadslevel1 = {
             "title":"test level 1"
