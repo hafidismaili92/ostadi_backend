@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from jobs.models import JobPost, Duration
+
+admin.site.register(JobPost)
+admin.site.register(Duration)

@@ -19,5 +19,8 @@ class Subject(models.Model):
 class Student(models.Model):
     level = models.ForeignKey(Level,on_delete = models.SET_NULL,null=True)
 
+    def __str__(self):
+        return self.user.email
+
 class Professor(models.Model):
     subjects = models.ManyToManyField(Subject)

@@ -11,7 +11,7 @@ app_name='jobs'
 
 router = routers.DefaultRouter()
 router.register(r'my-jobPosts', views.MyJobPostsViewSet, basename='my-jobPosts')
-
+router.register(r'',views.AllJobPostsViewSet,basename='jobs')
 
 urlpatterns = [
      path('', include(router.urls)),

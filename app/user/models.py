@@ -26,8 +26,8 @@ class User(AbstractBaseUser,PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    student_account = models.ForeignKey("profils.Student", on_delete=models.SET_NULL,null=True)
-    professor_account = models.ForeignKey("profils.Professor", on_delete=models.SET_NULL,null=True)
+    student_account = models.OneToOneField("profils.Student", on_delete=models.SET_NULL,null=True)
+    professor_account = models.OneToOneField("profils.Professor", on_delete=models.SET_NULL,null=True)
     is_default_student = models.BooleanField(null=True)
     
 
