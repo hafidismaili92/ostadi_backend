@@ -11,8 +11,9 @@ app_name='jobs'
 
 router = routers.DefaultRouter()
 router.register(r'my-jobPosts', views.MyJobPostsViewSet, basename='my-jobPosts')
-router.register(r'',views.AllJobPostsViewSet,basename='jobs')
+router.register(r'all-jobs',views.AllJobPostsViewSet,basename='jobs')
 
+router.register(r'my-proposals',views.MyProposalsViewSet,basename='my-proposals')
 urlpatterns = [
      path('', include(router.urls)),
    

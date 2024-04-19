@@ -102,11 +102,11 @@ class TestJobPostsApiAuthenticatedUser(TestCase):
         #arrange
         JobPayload = {
             "title":"test jobPost 3",
-            "description":"""Tempor amet aliqua amet pariatur sit voluptate minim consectetur in. Occaecat in enim commodo nulla commodo. Dolore tempor culpa sunt velit commodo
-            voluptate laboris. Commodo elit quis amet sunt ex labore magna eu qui mollit sint proident. Ex laboris dolor magna minim pariatur fugiat quis excepteur mollit. Tempor 
-            officia nostrud et officia esse deserunt anim tempor dolore.""",
+            "description":"""ff.""",
             
-            "amount":500
+            "amount":500,
+            "duration":self.duration.id,
+            
         }
         #act
         response = self.client.post(ADD_JOBPOST_URL,JobPayload)

@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from user.models import User
 from profils.models import Student, Subject
-from jobs.models import Duration, JobPost
+from jobs.models import Duration, JobPost, JobProposal
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,13 +29,26 @@ class SubjectSerializer(serializers.ModelSerializer):
 
 class JobPostSerializer(serializers.ModelSerializer):
     
-    student = StudentSerializer()
+    '''student = StudentSerializer()
     duration = DurationSerializer()
-    subjects = SubjectSerializer(many=True)
+    subjects = SubjectSerializer(many=True)'''
     class Meta:
         model = JobPost
+        fields='__all__'
+        read_only_fields = ['id','student']
+        extra_kwargs={
+            'subjects':{
+                'required':False
+            },
+            
+        }
+
+class JobProposalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobProposal
         fields = '__all__'
-        read_only_fields = ['id']
+        read_only_fields = ['id','proposed_by']
+    
     
     
         

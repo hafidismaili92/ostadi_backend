@@ -1,6 +1,6 @@
 from django.db import models
 
-from profils.models import Student, Subject
+from profils.models import Professor, Student, Subject
 
 class Duration(models.Model):
     duration = models.CharField(max_length=255)
@@ -19,3 +19,14 @@ class JobPost(models.Model):
 
     def __str__(self):
         return self.title
+
+class JobProposal(models.Model):
+    description = models.TextField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateTimeField(auto_now_add=True)
+    proposed_by = models.ForeignKey(Professor,on_delete=models.CASCADE)
+    post = models.ForeignKey(JobPost,on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return self.description
